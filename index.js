@@ -37,13 +37,13 @@ mongoose
 // ];
 
 // const assurances = [
-        //  {
-        //     "type":"pojištení majetku ",
-        //  "price": 10000,
-        //  "subjectOfinsurance":"dům",
-        //  "validFrom": 1.1.2022,
-        //   "validTo:"1.1.2028
-        // }
+//          {
+//             "type":"pojištení majetku ",
+//          "price": 10000,
+//          "subjectOfinsurance":"dům",
+//          "validFrom": 1.1.2022,
+//           "validTo:"1.1.2028
+//         }
 //     { id: 6, firstName: "Zuzana", lastName:"Holá", type:"pojištení majetku ", price: 10000,subjectOfinsurance:"dům",validFrom: "1.1.2022", validTo:"1.1.2028"},
 //     { id: 7, firstName: "Milan", lastName:"Řepa", type:"pojištení majetku ", price: 10000,subjectOfinsurance:"dům",validFrom: "1.1.2022", validTo:"1.1.2028" },
 //     { id: 8, firstName: "Eva", lastName:"Smutná", type:"pojištení majetku ", price: 10000,subjectOfinsurance:"dům",validFrom: "1.1.2022", validTo:"1.1.2028"  },
@@ -151,7 +151,7 @@ function validateLogin(data) {
 
     return schema.validate(data, {presence: "required"});
 }
-//---------------------------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
 // Hash functions --------------------------------------------------------------
 function hashPassword(password, saltRounds = 10) {
     return bcrypt.hashSync(password, saltRounds);
@@ -378,7 +378,7 @@ app.post("/api/auth", (req, res) => {
 
 
 // PUT requests ----------------------------------------------------------------
-app.put('/api/clients/:id', ...requireAdminHandlers, (req, res) => {
+app.put('/api/clients/:id', (req, res) => {
     const {error} = validateMovie(req.body, false);
     if (error) {
         res.status(400).send(error.details[0].message);
@@ -393,7 +393,7 @@ app.put('/api/clients/:id', ...requireAdminHandlers, (req, res) => {
     }
 });
 
-app.put('/api/assurances/:id', ...requireAdminHandlers, (req, res) => {
+app.put('/api/assurances/:id', (req, res) => {
     const {error} = validatePerson(req.body, false);
     if (error) {
         res.status(400).send(error.details[0].message);
@@ -441,27 +441,27 @@ app.delete("/api/auth", (req, res) => {
         res.send("Uživatel odhlášen");
     });
 });
-// app.put('/api/clients/:id', (req, res) => {
-// 	const id = Number(req.params.id);
-// 	const client = clients.find(client => client.id === id);
-// 	if (!client) {
-// 		res.status(404).send('Klient nebyl nalezen.');
-// 		return;
-// 	}
-// 	const { error } = validateClient(req.body);
-// 	if (error) {
-// 		res.status(400).send(error.details[0].message);
-// 	} else {
-//         client.firstName= req.body.firstName;
-//         client.lastName= req.body.lastName;
-//         client.email= req.body.email;
-//         client.phone= req.body. phone;
-//         client.streetNumber= req.body.streetNumber;
-//         client.city= req.body.city;
-//         client.posteNumber= req.body.posteNumber;
-// 		res.send(client);
-// 	}
-// });
+app.put('/api/clients/:id', (req, res) => {
+	const id = Number(req.params.id);
+	const client = clients.find(client => client.id === id);
+	if (!client) {
+		res.status(404).send('Klient nebyl nalezen.');
+		return;
+	}
+	const { error } = validateClient(req.body);
+	if (error) {
+		res.status(400).send(error.details[0].message);
+	} else {
+        client.firstName= req.body.firstName;
+        client.lastName= req.body.lastName;
+        client.email= req.body.email;
+        client.phone= req.body. phone;
+        client.streetNumber= req.body.streetNumber;
+        client.city= req.body.city;
+        client.posteNumber= req.body.posteNumber;
+		res.send(client);
+	}
+});
 
 
 
