@@ -1,3 +1,4 @@
+const cors = require('cors');
 const API_PORT = 5000;
 const mongoose = require('mongoose');
 const Joi = require('joi');
@@ -6,6 +7,7 @@ const expressSession = require("express-session");
 const bcrypt = require("bcrypt");
 const app = express();
 app.use(express.json());
+app.use(cors());
 app.use(expressSession({
     secret: "a/#$sd#0$",
     resave: false,
@@ -433,7 +435,7 @@ app.delete('/api/assurances/:id', (req, res) => {
         }).catch(err => { res.status(400).send("Nepodařilo se smazat pojištění!") });
 });
 app.delete("/api/auth", (req, res) => {
-    req.session.destroy((err) => {
+    req.session.destroy((err) => { 
         if (err) {
             res.status(500).send("Nastala chyba při mazání session");
             return;
@@ -462,7 +464,6 @@ app.put('/api/clients/:id', (req, res) => {
 		res.send(client);
 	}
 });
-
 
 
 
